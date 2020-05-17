@@ -9,8 +9,6 @@ import {Provider} from 'react-redux';
 import {Component} from 'react';
 import store from './redux/store';
 
-console.log('STORE', store.getState());
-
 // AppRegistry.registerComponent(appName, () => MyApp);
 ReactDOM.render(
   <Provider store={store}>

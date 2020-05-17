@@ -1,27 +1,37 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import search from '../reducers/search';
-import getCaps from '../reducers/getCaps';
+// import search from '../reducers/search';
+// import getCaps from '../reducers/reducer';
 import Axios from 'axios';
 import store from '../redux/store';
 import {useState, useEffect} from 'react';
-import SearchBar from './SearchBar';
+import fetchCapsules from '../redux/fetchCapsules';
+import {bindActionCreators} from 'redux';
+import {
+  getCapsules,
+  getCapsulesPending,
+  getCapsulesError,
+} from '../reducers/reducer';
+import {fetchCapsPending} from '../redux/actions';
 
-const List = ({capsules}) => {
-  const [listedCapsules, setCapsules] = useState([...capsules]);
+const List = ({capsules, fetchCapsules}) => {
+  fetchCapsules();
+  // dispatch(fetchCapsPending());
+  const [listedCapsules, setCapsules] = useState([capsules]);
   const [searchTerm, setSearchTerm] = useState('');
 
   const updateSearchTerm = evt => {
-    console.log(evt.target.value);
-    const matchingCapsules = capsules.filter(cap => cap.name.match(regex));
-    setCapsules({listedCapsules: matchingCapsules});
-    setSearchTerm({searchTerm: evt.target.value});
+    const searchString = evt.target.value;
+    setSearchTerm(searchString);
+    const matchingCapsules = capsules.filter(cap =>
+      cap.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+    setCapsules(matchingCapsules);
   };
-
-  useEffect(() => {});
 
   return (
     <div className="list-and-search">
+      {console.log('LISTED', listedCapsules.length)}
       <div>
         <form onChange={evt => updateSearchTerm(evt)}>
           <label htmlFor="search-capsules">Search for Capsule(s)</label>
@@ -32,22 +42,32 @@ const List = ({capsules}) => {
         </form>
       </div>
 
-      <ul className="capsule-list">
+      {/* <ul className="capsule-list">
         {listedCapsules && listedCapsules.length
-          ? capsules.map((capsule, index) => {
+          ? listedCapsules.map((capsule, index) => {
               return <li key={index}>{capsule.name}</li>;
             })
           : 'WHERE ARE MY CAPSULES?!'}
-      </ul>
+      </ul> */}
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  const {capsules} = state;
-};
+const mapStateToProps = state => ({
+  error: getCapsulesError(state),
+  capsules: getCapsules(state),
+  pending: getCapsulesPending(state),
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchCapsules: fetchCapsules,
+    },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,
-  search,
+  mapDispatchToProps,
 )(List);

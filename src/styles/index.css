@@ -18,10 +18,25 @@ body {
 }
 /* These styles disable body scrolling if you are using <ScrollView> */
 body {
-  overflow: hidden;
+  /* overflow: hidden; */
+  background-color: #0099cc;
 }
 /* These styles make the root element full-height */
 #root {
   display: flex;
   height: 100%;
+}
+
+.capsule-app {
+  width: 100%;
+  border: 1px dotted white;
+}
+
+.capsule-page {
+  /* width: 100%; */
+  flex-direction: column;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

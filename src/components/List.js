@@ -1,20 +1,32 @@
 import React from 'react';
 import {useState} from 'react';
 import {connect} from 'react-redux';
+import CapsuleItem from './CapsuleItem';
+import '../styles/listStyles.css';
 
 const List = ({capsules, error, pending}) => {
   console.log('RECEIVING', capsules);
 
-  const [listedCapsules, setCapsules] = useState([capsules]);
+  const [listedCapsules, setCapsules] = useState(capsules);
   const [searchTerm, setSearchTerm] = useState('');
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPages] = useState(1);
 
   const updateSearchTerm = evt => {
     const searchString = evt.target.value;
     setSearchTerm(searchString);
     const matchingCapsules = capsules.filter(cap =>
-      cap.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      cap.title.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setCapsules(matchingCapsules);
+  };
+
+  const renderPagination = () => {
+    const NumberOfPages = capsules.length / 24;
+    setPages(NumberOfPages);
+    for (let i = 1; i <= NumberOfPages; i++) {
+      return <button>{i}</button>;
+    }
   };
 
   return (
@@ -30,13 +42,14 @@ const List = ({capsules, error, pending}) => {
         </form>
       </div>
 
-      {/* <ul className="capsule-list">
+      <ul className="capsule-list">
         {listedCapsules && listedCapsules.length
           ? listedCapsules.map((capsule, index) => {
-              return <li key={index}>{capsule.title}</li>;
+              return <CapsuleItem key={index} capsule={capsule} />;
+              // return <li key={index}>{capsule.title}</li>;
             })
           : 'WHERE ARE MY CAPSULES?!'}
-      </ul> */}
+      </ul>
     </div>
   );
 };

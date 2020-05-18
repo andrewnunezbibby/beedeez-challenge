@@ -4,14 +4,10 @@ import {
   FETCH_CAPSULES_SUCCESS,
   FETCH_CAPSULES_ERROR,
 } from '../redux/actions';
+import seedCapsules from '../seedData';
 
 const initialState = {
-  capsules: [
-    {title: 'Prince', prof: 'singer'},
-    {title: 'Jodeci', prof: 'singer'},
-    {title: 'Patrick', prof: 'star'},
-    {title: 'Michael Jordan', prof: 'goat'},
-  ],
+  seedCapsules,
 };
 
 export default function(state = {}, action) {

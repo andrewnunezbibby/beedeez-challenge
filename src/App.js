@@ -15,7 +15,7 @@ import CapsulePage from './components/CapsulePage';
 
 export default function App() {
   return (
-    <div className="todo-app">
+    <div className="capsule-app">
       <h1>Capsules</h1>
       <CapsulePage />
     </div>

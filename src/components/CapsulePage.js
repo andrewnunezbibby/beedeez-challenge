@@ -21,10 +21,14 @@ class CapsulePage extends Component {
   }
 
   render() {
-    console.log('STORE', store.getState());
+    console.log('STORE', this.props.pending);
     return (
-      <div>
-        <List capsules={this.state.loadedCapsules} />
+      <div className="capsule-page">
+        {!this.props.pending ? (
+          <List capsules={this.state.loadedCapsules} />
+        ) : (
+          'WHERE ARE MY CAPSULES?!'
+        )}
       </div>
     );
   }

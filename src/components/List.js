@@ -1,22 +1,10 @@
 import React from 'react';
+import {useState} from 'react';
 import {connect} from 'react-redux';
-// import search from '../reducers/search';
-// import getCaps from '../reducers/reducer';
-import Axios from 'axios';
-import store from '../redux/store';
-import {useState, useEffect} from 'react';
-import fetchCapsules from '../redux/fetchCapsules';
-import {bindActionCreators} from 'redux';
-import {
-  getCapsules,
-  getCapsulesPending,
-  getCapsulesError,
-} from '../reducers/reducer';
-import {fetchCapsPending} from '../redux/actions';
 
-const List = ({capsules, fetchCapsules}) => {
-  fetchCapsules();
-  // dispatch(fetchCapsPending());
+const List = ({capsules, error, pending}) => {
+  console.log('RECEIVING', capsules);
+
   const [listedCapsules, setCapsules] = useState([capsules]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -31,7 +19,7 @@ const List = ({capsules, fetchCapsules}) => {
 
   return (
     <div className="list-and-search">
-      {console.log('LISTED', listedCapsules.length)}
+      {console.log('LISTED', listedCapsules)}
       <div>
         <form onChange={evt => updateSearchTerm(evt)}>
           <label htmlFor="search-capsules">Search for Capsule(s)</label>
@@ -45,7 +33,7 @@ const List = ({capsules, fetchCapsules}) => {
       {/* <ul className="capsule-list">
         {listedCapsules && listedCapsules.length
           ? listedCapsules.map((capsule, index) => {
-              return <li key={index}>{capsule.name}</li>;
+              return <li key={index}>{capsule.title}</li>;
             })
           : 'WHERE ARE MY CAPSULES?!'}
       </ul> */}
@@ -54,20 +42,9 @@ const List = ({capsules, fetchCapsules}) => {
 };
 
 const mapStateToProps = state => ({
-  error: getCapsulesError(state),
-  capsules: getCapsules(state),
-  pending: getCapsulesPending(state),
+  error: state.error,
+  capsules: state.capsules,
+  pending: state.pending,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      fetchCapsules: fetchCapsules,
-    },
-    dispatch,
-  );
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(List);
+export default connect(mapStateToProps)(List);

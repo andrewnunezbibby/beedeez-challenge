@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {fetchCapsules} from '../redux/fetchCapsules';
 import {
   FETCH_CAPSULES_PENDING,
   FETCH_CAPSULES_SUCCESS,
@@ -7,14 +7,14 @@ import {
 
 const initialState = {
   capsules: [
-    {name: 'Prince', prof: 'singer'},
-    {name: 'Jodeci', prof: 'singer'},
-    {name: 'Patrick', prof: 'star'},
-    {name: 'Michael Jordan', prof: 'goat'},
+    {title: 'Prince', prof: 'singer'},
+    {title: 'Jodeci', prof: 'singer'},
+    {title: 'Patrick', prof: 'star'},
+    {title: 'Michael Jordan', prof: 'goat'},
   ],
 };
 
-export default function(state = initialState, action) {
+export default function(state = {}, action) {
   switch (action.type) {
     case FETCH_CAPSULES_PENDING:
       return {
@@ -25,7 +25,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         pending: false,
-        capsules: action.payload,
+        capsules: action.capsules,
       };
     case FETCH_CAPSULES_ERROR:
       return {
@@ -38,6 +38,6 @@ export default function(state = initialState, action) {
   }
 }
 
-export const getCapsules = state => state.capsules;
-export const getCapsulesPending = state => state.pending;
-export const getCapsulesError = state => state.error;
+// export const getCapsules = state => state.capsules;
+// export const getCapsulesPending = state => state.pending;
+// export const getCapsulesError = state => state.error;

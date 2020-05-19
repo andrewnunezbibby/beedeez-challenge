@@ -9,9 +9,6 @@
 .capsule-list {
   margin: auto;
   display: grid;
-  /* grid-auto-flow: column; */
-  /* width: 100%; */
-  /* grid-template-columns: 150px 150px 150px; */
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 15px;
   grid-row-gap: 10px;

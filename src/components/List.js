@@ -5,12 +5,8 @@ import CapsuleItem from './CapsuleItem';
 import '../styles/listStyles.css';
 
 const List = ({capsules, error, pending}) => {
-  console.log('RECEIVING', capsules);
-
   const [listedCapsules, setCapsules] = useState(capsules);
   const [searchTerm, setSearchTerm] = useState('');
-  const [pages, setPages] = useState(0);
-  const [currentPage, setCurrentPages] = useState(1);
 
   const updateSearchTerm = evt => {
     const searchString = evt.target.value;
@@ -19,14 +15,6 @@ const List = ({capsules, error, pending}) => {
       cap.title.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setCapsules(matchingCapsules);
-  };
-
-  const renderPagination = () => {
-    const NumberOfPages = capsules.length / 24;
-    setPages(NumberOfPages);
-    for (let i = 1; i <= NumberOfPages; i++) {
-      return <button>{i}</button>;
-    }
   };
 
   return (
@@ -46,10 +34,12 @@ const List = ({capsules, error, pending}) => {
         {listedCapsules && listedCapsules.length
           ? listedCapsules.map((capsule, index) => {
               return <CapsuleItem key={index} capsule={capsule} />;
-              // return <li key={index}>{capsule.title}</li>;
             })
           : 'WHERE ARE MY CAPSULES?!'}
       </ul>
+      {/* <div className="pagination">
+        <ul className="pagination-list">{renderPagination}</ul>
+      </div> */}
     </div>
   );
 };
